@@ -1,0 +1,27 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.so
+
+# Virtual environments
+.venv/
+env/
+venv/
+
+# Environment variables
+.env
+
+# Logs and results
+logs/
+results/
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# backup files and old scripts
+backup/
+old_scripts/
+
+api_keys.py
