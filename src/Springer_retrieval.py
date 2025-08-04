@@ -11,6 +11,7 @@ from datetime import datetime
 import logging
 
 API_KEY = os.getenv("API_KEY_SPRINGER")
+API_URL = "https://api.springernature.com/meta/v2/json"
 
 # Setup logging
 log_dir = "logs"
@@ -58,8 +59,8 @@ api_calls = 0
 
 try:
     # Build the base URL for API requests
-    base_url = "https://api.springernature.com/meta/v2/json"
-    
+    base_url = API_URL
+
     # Construct query according to Springer API documentation
     query = f'{search_string} AND dateFrom:"{startdate}"'
     
