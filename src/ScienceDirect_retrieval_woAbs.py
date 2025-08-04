@@ -2,7 +2,7 @@ import requests
 import json
 import itertools
 import time
-from api_keys import api_key_sciencedirect
+import os
 
 # Fetches results from ScienceDirect API based on specified search terms
 # This script combines results from multiple queries to avoid API limits and deduplicates by DOI
@@ -10,7 +10,7 @@ from api_keys import api_key_sciencedirect
 # Therefore use ....py script to fetch abstracts TODO: add script later
 
 # Config
-API_KEY = api_key_sciencedirect
+API_KEY = os.getenv("API_KEY_SCIENDEDIRECT")
 API_URL = "https://api.elsevier.com/content/search/sciencedirect"
 
 SHOW = 25  # Treffer pro Seite: 10, 25, 50, 100
@@ -22,6 +22,11 @@ HEADERS = {
     "Accept": "application/json",
     "X-ELS-APIKey": API_KEY
 }
+
+# Create results directory if it doesn't exist
+results_dir = "results"
+if not os.path.exists(results_dir):
+    os.makedirs(results_dir)
 
 # ---- Search String GROUPS ----
 group_A = [
@@ -135,6 +140,8 @@ for a, b, c in itertools.product(group_A, group_B, group_C):
 print(f"\n✅ Finished. Total unique results: {len(all_results)}")
 
 # ---- SAVE RESULTS ----
-with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
+all_results_file = os.path.join(results_dir, OUTPUT_FILE)
+with open(all_results_file, "w", encoding="utf-8") as f:
     json.dump(all_results, f, indent=2)
-print(f"Results saved to {OUTPUT_FILE}")
+
+print(f"Results saved to {all_results_file}")
